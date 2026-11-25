@@ -14,7 +14,11 @@ def exibir_menu():
     print("4 - Listar pessoas")
     print("5 - Avaliar cadastro")
     print("6 - Sair")
-    return int(input("Escolha uma opcao: "))
+    opcao = input("Escolha uma opcao: ")
+    try:
+        return int(opcao)
+    except ValueError:
+        return 0
 
 
 def cadastrar_pessoa(cadastro):
