@@ -1,7 +1,7 @@
 """Programa para cadastro de pessoas. Uso didático na disciplina de GQS."""
 
 from cadastro import CadastroPessoas
-
+from repositorio_pessoas_mysql import RepositorioPessoasMySQL
 
 def exibir_menu():
     """Exibe o menu principal."""
@@ -55,26 +55,23 @@ def consultar_pessoa(cadastro):
 
 
 def alterar_pessoa(cadastro):
-    """Altera os dados de uma pessoa."""
-    procurado = input("Nome para alterar: ")
-    pessoa = cadastro.buscarPorNome(procurado)
-
-    if pessoa is None:
+    """Altera e exibe os dados de uma pessoa."""
+    nome = input("Nome para alterar: ")
+    if cadastro.buscarPorNome(nome) is None:
         print("Nao encontrado")
-    else:
-        novo_nome = input("Novo nome: ")
-        nova_idade = int(input("Nova idade: "))
-        novo_email = input("Novo e-mail: ")
+        return
 
-        cadastro.alterar(
-            procurado,
-            novo_nome,
-            nova_idade,
-            novo_email
-        )
+    novo_nome = input("Novo nome: ")
+    nova_idade = int(input("Nova idade: "))
+    novo_email = input("Novo e-mail: ")
 
-        print("Pessoa alterada!")
-        exibir_pessoa(pessoa)
+    alterada = cadastro.alterar(nome, novo_nome, nova_idade, novo_email)
+    if alterada is None:
+        print("Nao encontrado")
+        return
+
+    print("Pessoa alterada!")
+    exibir_pessoa(alterada)
 
 
 def listar_pessoas(cadastro):
@@ -143,7 +140,7 @@ def analisar_pessoa(cadastro):
 
 def executar():
     """Executa o menu principal da aplicação."""
-    cadastro = CadastroPessoas()
+    cadastro = CadastroPessoas(RepositorioPessoasMySQL())
     op = 0
 
     while op != 6:

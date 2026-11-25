@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS cadastro_pessoas CHARACTER SET utf8mb4;
+USE cadastro_pessoas;
+
+CREATE TABLE IF NOT EXISTS pessoas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) COLLATE utf8mb4_0900_bin NOT NULL,
+    idade INT NOT NULL,
+    email VARCHAR(254) NOT NULL
+);
